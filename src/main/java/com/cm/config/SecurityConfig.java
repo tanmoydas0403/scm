@@ -1,6 +1,7 @@
 package com.cm.config;
 
 import com.cm.service.impl.SecurityCustomUserDetailsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    private AuthFailureHandler authFailureHandler;
 
     @Autowired
     private SecurityCustomUserDetailsService detailsService;
@@ -44,8 +48,11 @@ public class SecurityConfig {
                             .successForwardUrl("/user/dashboard")
                             //.failureForwardUrl("/login?error=true")
                             .usernameParameter("email")
-                            .passwordParameter("password");
+                            .passwordParameter("password")
+                            .failureHandler(authFailureHandler);
                 });
+
+                
 
         http.logout(logoutFrom ->{
             logoutFrom.logoutUrl("/do-logout")

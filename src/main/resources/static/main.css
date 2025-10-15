@@ -1305,6 +1305,11 @@
       outline-style: none;
     }
   }
+  .data-th\:block {
+    &[data-th] {
+      display: block;
+    }
+  }
   .sm\:hidden {
     @media (width >= 40rem) {
       display: none;
