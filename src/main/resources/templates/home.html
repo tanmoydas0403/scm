@@ -1,100 +1,375 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
 <head>
-  <title>Home page</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Home - Smart Contact Manager</title>
+  
+  <!-- Production Tailwind CSS -->
+  <link rel="stylesheet" th:href="@{/css/output.css}" />
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    * { 
+      font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+    }
+    
+    html { 
+      scroll-behavior: smooth; 
+    }
+    
+    @keyframes float { 
+      0%, 100% { transform: translateY(0px); } 
+      50% { transform: translateY(-20px); } 
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+    
+    .hero-gradient { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+    }
+    
+    .dark .hero-gradient { 
+      background: linear-gradient(135deg, #4338ca 0%, #6b21a8 100%); 
+    }
+    
+    .scroll-reveal { 
+      opacity: 0; 
+      transform: translateY(30px); 
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out; 
+    }
+    
+    .scroll-reveal.active { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  </style>
 </head>
-<body>
-<div id="content" class="border">
 
-  <!-- Banner Section -->
-  <section class="bg-blue-600 text-white py-20 animate__animated animate__fadeInDown">
-    <div class="container mx-auto text-center">
-      <h2 class="text-4xl font-bold mb-4 dark:text-white">Welcome to Contact Manager</h2>
-      <p class="text-lg mb-8 dark:text-gray-300">Manage all your contacts effortlessly and securely in one place.</p>
-      <a href="#" class="bg-white text-blue-600 dark:bg-gray-700 dark:text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300">
-        Get Started
-      </a>
+<body class="bg-white dark:bg-gray-900 transition-colors duration-300">
+<div id="content">
+
+  <!-- Hero/Banner Section -->
+  <section class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+      <img 
+        src="https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80" 
+        alt="Background" 
+        class="w-full h-full object-cover opacity-30 dark:opacity-20"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white/80 dark:from-gray-900/90 dark:via-gray-900/70 dark:to-gray-900/90"></div>
+    </div>
+    
+    <!-- Decorative shapes -->
+    <div class="absolute top-20 left-10 w-72 h-72 bg-purple-400/20 dark:bg-purple-600/10 rounded-full blur-3xl animate-float"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-400/20 dark:bg-blue-600/10 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+    
+    <div class="container mx-auto px-6 relative z-10 py-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-md mb-8 fade-in-up shadow-2xl border-2 border-gray-200 dark:border-gray-700">
+          <i class="fas fa-sparkles text-purple-600 dark:text-purple-400 text-lg"></i>
+          <span class="text-sm font-bold text-gray-900 dark:text-white">Smart Contact Management</span>
+        </div>
+        
+        <!-- Main Heading with 3D Effect -->
+        <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight fade-in-up hero-3d-text" style="animation-delay: 0.1s;">
+          Manage Your Contacts <span class="hero-3d-gradient">Smarter</span>
+        </h1>
+        
+        <!-- Subtitle -->
+        <p class="text-xl md:text-2xl mb-12 text-gray-800 dark:text-gray-200 leading-relaxed fade-in-up max-w-3xl mx-auto font-medium" style="animation-delay: 0.2s;">
+          Organize, secure, and access your contacts effortlessly. The modern way to manage relationships.
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-4 fade-in-up" style="animation-delay: 0.3s;">
+          <a href="/register" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-700 rounded-xl font-bold text-lg shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300">
+              <i class="fas fa-user-plus"></i>
+              Get Start Free
+            </a>
+          <a href="/about" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg bg-white/60 dark:bg-gray-800/60 text-gray-900 dark:text-white hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 shadow-xl border-2 border-gray-300 dark:border-gray-600 backdrop-blur-sm">
+            <i class="fas fa-play-circle"></i>
+            Learn More
+          </a>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 fade-in-up" style="animation-delay: 0.4s;">
+          <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-gray-200 dark:border-gray-700">
+            <div class="text-4xl font-black mb-2 text-gray-900 dark:text-white">10K+</div>
+            <div class="text-sm text-gray-700 dark:text-gray-300 font-semibold">Active Users</div>
+          </div>
+          <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-gray-200 dark:border-gray-700">
+            <div class="text-4xl font-black mb-2 text-gray-900 dark:text-white">500K+</div>
+            <div class="text-sm text-gray-700 dark:text-gray-300 font-semibold">Contacts Managed</div>
+          </div>
+          <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-gray-200 dark:border-gray-700">
+            <div class="text-4xl font-black mb-2 text-gray-900 dark:text-white">99.9%</div>
+            <div class="text-sm text-gray-700 dark:text-gray-300 font-semibold">Uptime</div>
+          </div>
+          <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-gray-200 dark:border-gray-700">
+            <div class="text-4xl font-black mb-2 text-gray-900 dark:text-white">24/7</div>
+            <div class="text-sm text-gray-700 dark:text-gray-300 font-semibold">Support</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
+
   <!-- Features Section -->
-  <section class="py-20 bg-white dark:bg-gray-900">
-    <div class="container mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-12 animate__animated animate__fadeInUp dark:text-white">Features</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow hover:shadow-lg transition duration-300 transform hover:scale-105">
-          <i class="fas fa-address-book text-blue-600 text-4xl mb-4"></i>
-          <h3 class="text-xl font-semibold mb-2 dark:text-white">Easy Contact Management</h3>
-          <p class="text-gray-600 dark:text-gray-300">Add, edit, and organize your contacts in a user-friendly interface.</p>
+  <section class="py-24 bg-slate-50 dark:bg-gray-800 transition-colors duration-300">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl md:text-5xl font-black mb-4 text-slate-900 dark:text-white">
+          Powerful Features
+        </h2>
+        <p class="text-xl text-slate-600 dark:text-gray-300 max-w-2xl mx-auto">
+          Everything you need to manage contacts efficiently
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- Easy Management - Blue -->
+        <div class="group bg-white dark:bg-gray-700 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-slate-200 dark:border-gray-600 scroll-reveal">
+          <div class="w-16 h-16 bg-blue-500 dark:bg-gradient-to-br dark:from-blue-400 dark:to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shadow-lg">
+            <i class="fas fa-address-book text-2xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white">Easy Management</h3>
+          <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
+            Add, edit, and organize contacts with an intuitive interface designed for speed.
+          </p>
         </div>
-        <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow hover:shadow-lg transition duration-300 transform hover:scale-105">
-          <i class="fas fa-lock text-blue-600 text-4xl mb-4"></i>
-          <h3 class="text-xl font-semibold mb-2 dark:text-white">Secure Storage</h3>
-          <p class="text-gray-600 dark:text-gray-300">Your data is protected with top-level encryption and security measures.</p>
+
+        <!-- Secure Storage - Purple -->
+        <div class="group bg-white dark:bg-gray-700 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-slate-200 dark:border-gray-600 scroll-reveal">
+          <div class="w-16 h-16 bg-purple-500 dark:bg-gradient-to-br dark:from-purple-400 dark:to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shadow-lg">
+            <i class="fas fa-lock text-2xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white">Secure Storage</h3>
+          <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
+            Your data is protected with enterprise-grade encryption and security measures.
+          </p>
         </div>
-        <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow hover:shadow-lg transition duration-300 transform hover:scale-105">
-          <i class="fas fa-globe text-blue-600 text-4xl mb-4"></i>
-          <h3 class="text-xl font-semibold mb-2 dark:text-white">24/7 Access</h3>
-          <p class="text-gray-600 dark:text-gray-300">Access your contacts anytime, anywhere from any device.</p>
+
+        <!-- 24/7 Access - Green -->
+        <div class="group bg-white dark:bg-gray-700 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-slate-200 dark:border-gray-600 scroll-reveal">
+          <div class="w-16 h-16 bg-green-500 dark:bg-gradient-to-br dark:from-green-400 dark:to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shadow-lg">
+            <i class="fas fa-globe text-2xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white">24/7 Access</h3>
+          <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
+            Access your contacts anytime, anywhere from any device with cloud sync.
+          </p>
+        </div>
+
+        <!-- Smart Search - Orange -->
+        <div class="group bg-white dark:bg-gray-700 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-slate-200 dark:border-gray-600 scroll-reveal">
+          <div class="w-16 h-16 bg-orange-500 dark:bg-gradient-to-br dark:from-orange-400 dark:to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shadow-lg">
+            <i class="fas fa-search text-2xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white">Smart Search</h3>
+          <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
+            Find any contact instantly with powerful search and filtering capabilities.
+          </p>
+        </div>
+
+        <!-- Team Sharing - Pink -->
+        <div class="group bg-white dark:bg-gray-700 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-slate-200 dark:border-gray-600 scroll-reveal">
+          <div class="w-16 h-16 bg-pink-500 dark:bg-gradient-to-br dark:from-pink-400 dark:to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shadow-lg">
+            <i class="fas fa-users text-2xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white">Team Sharing</h3>
+          <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
+            Collaborate with your team by sharing contacts and groups securely.
+          </p>
+        </div>
+
+        <!-- Auto Backup - Indigo -->
+        <div class="group bg-white dark:bg-gray-700 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-slate-200 dark:border-gray-600 scroll-reveal">
+          <div class="w-16 h-16 bg-indigo-500 dark:bg-gradient-to-br dark:from-indigo-400 dark:to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shadow-lg">
+            <i class="fas fa-sync-alt text-2xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white">Auto Backup</h3>
+          <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
+            Never lose data with automatic cloud backups and version history.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Call to Action Section -->
-  <section class="bg-blue-600 text-white py-20 animate__animated animate__fadeInUp">
-    <div class="container mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-4 dark:text-white">Ready to Manage Your Contacts?</h2>
-      <p class="text-lg mb-8 dark:text-gray-300">Sign up today and experience the easiest way to manage your contacts.</p>
-      <a href="#" class="bg-white text-blue-600 dark:bg-gray-700 dark:text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300">
-        Create an Account
-      </a>
-    </div>
-  </section>
+  <section class="py-24 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-6">
+      <div class="relative max-w-5xl mx-auto bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-3xl p-12 md:p-16 text-center text-white overflow-hidden shadow-2xl scroll-reveal">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
+        
+        <div class="relative z-10">
+          <h2 class="text-4xl md:text-5xl font-black mb-6 text-white" style="text-shadow: 2px 2px 10px rgba(0,0,0,0.3);">
+            Ready to Get Started?
+          </h2>
+          <p class="text-xl mb-10 text-white max-w-2xl mx-auto leading-relaxed font-medium" style="text-shadow: 1px 1px 6px rgba(0,0,0,0.3);">
+            Join thousands of users who trust us to manage their contacts securely and efficiently.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-4">
+            <a href="/register" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-700 rounded-xl font-bold text-lg shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300">
+              <i class="fas fa-user-plus"></i>
+              Create Free Account
+            </a>
 
-  <!-- Testimonials Section -->
-  <section class="py-20 bg-white dark:bg-gray-900">
-    <div class="container mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-12 animate__animated animate__fadeInUp dark:text-white">What Our Users Say</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow hover:shadow-lg transition duration-300 transform hover:scale-105">
-          <p class="text-gray-600 dark:text-gray-300 italic">"Contact Manager has changed the way I organize my contacts. It's fast, secure, and incredibly easy to use!"</p>
-          <h4 class="text-lg font-semibold mt-4 dark:text-white">- John Doe</h4>
-        </div>
-        <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow hover:shadow-lg transition duration-300 transform hover:scale-105">
-          <p class="text-gray-600 dark:text-gray-300 italic">"A fantastic app with great features! I love the 24/7 access and secure storage options."</p>
-          <h4 class="text-lg font-semibold mt-4 dark:text-white">- Jane Smith</h4>
+            <a href="/contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg text-white hover:bg-white/25 transition-all duration-300 shadow-xl border-2 border-white/70 backdrop-blur-sm">
+              <i class="fas fa-comments"></i>
+              Contact Sales
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section class="py-20 bg-gray-100 dark:bg-gray-900 animate__animated animate__fadeInUp">
-    <div class="container mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-12 dark:text-white">Get in Touch</h2>
-      <form class="max-w-lg mx-auto">
-        <input type="text" placeholder="Your Name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded dark:bg-gray-800 dark:text-white dark:border-gray-600">
-        <input type="email" placeholder="Your Email" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded dark:bg-gray-800 dark:text-white dark:border-gray-600">
-        <textarea placeholder="Your Message" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded dark:bg-gray-800 dark:text-white dark:border-gray-600"></textarea>
-        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded font-semibold hover:bg-blue-700 transition duration-300">
-          Send Message
-        </button>
-      </form>
+  <!-- Testimonials Section -->
+  <section class="py-24 bg-slate-50 dark:bg-gray-800">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl md:text-5xl font-black mb-4 text-slate-900 dark:text-white">What Our Users Say</h2>
+        <p class="text-xl text-slate-600 dark:text-gray-300">Trusted by professionals worldwide</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-blue-100 dark:border-gray-600 scroll-reveal">
+          <div class="flex items-center gap-1 mb-4">
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+          </div>
+          <p class="text-slate-800 dark:text-gray-100 italic mb-6 text-lg font-medium leading-relaxed">
+            "Contact Manager has completely transformed how I organize my professional network. It's fast, secure, and incredibly intuitive!"
+          </p>
+          <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 dark:bg-gradient-to-br dark:from-green-400 dark:to-emerald-500 rounded-full flex items-center justify-center text-gray-400 font-bold text-xl shadow-lg border-2 border-black-600 dark:border-green-400">J</div>
+            <div>
+              <div class="font-bold text-slate-900 dark:text-white">John Doe</div>
+              <div class="text-sm text-slate-600 dark:text-gray-400 font-medium">Business Consultant</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-purple-100 dark:border-gray-600 scroll-reveal">
+          <div class="flex items-center gap-1 mb-4">
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+            <i class="fas fa-star text-yellow-500 text-lg"></i>
+          </div>
+          <p class="text-slate-800 dark:text-gray-100 italic mb-6 text-lg font-medium leading-relaxed">
+            "A fantastic app with powerful features! The 24/7 access and secure storage give me peace of mind."
+          </p>
+          <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 dark:bg-gradient-to-br dark:from-green-400 dark:to-emerald-500 rounded-full flex items-center justify-center text-gray-400 font-bold text-xl shadow-lg border-2 border-black-600 dark:border-green-400">J</div>
+            <div>
+              <div class="font-bold text-slate-900 dark:text-white">Jane Smith</div>
+              <div class="text-sm text-slate-600 dark:text-gray-400 font-medium">Marketing Director</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Footer Section -->
-  <footer class="bg-gray-800 text-white py-8">
-    <div class="container mx-auto text-center">
-      <p>&copy; 2024 Contact Manager. All rights reserved.</p>
-      <p>Follow us on <a href="#" class="text-blue-400">Facebook</a>, <a href="#" class="text-blue-400">Twitter</a>, and <a href="#" class="text-blue-400">Instagram</a>.</p>
+  <footer class="bg-slate-900 dark:bg-gray-950 text-white py-12">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Smart Contact Manager</h3>
+          <p class="text-slate-400">Manage your contacts smarter, faster, and more securely.</p>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Product</h4>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="/features" class="hover:text-white transition">Features</a></li>
+            <li><a href="/services" class="hover:text-white transition">Services</a></li>
+            <li><a href="/about" class="hover:text-white transition">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Support</h4>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="/contact" class="hover:text-white transition">Contact</a></li>
+            <li><a href="/faq" class="hover:text-white transition">FAQ</a></li>
+            <li><a href="/help" class="hover:text-white transition">Help Center</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Follow Us</h4>
+          <div class="flex gap-4">
+            <a href="https://www.facebook.com/profile.php?id=100010808344207" target="_blank" class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 hover:scale-110 transition-all">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/tanmoy-das-404a84204/" target="_blank" class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 hover:scale-110 transition-all">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/tanmoydas0403" target="_blank" class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 hover:scale-110 transition-all">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-slate-800 pt-8 text-center text-slate-400">
+        <p>&copy; 2025 Smart Contact Manager. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
 </div>
 
-<!-- Link to external JS file -->
-<script src="/js/script.js"></script>
+<script>
+  console.log("Home page loaded");
+  
+  // Scroll reveal animation
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, observerOptions);
+  
+  document.querySelectorAll('.scroll-reveal').forEach((el) => {
+    observer.observe(el);
+  });
+  
+  // Parallax effect for hero
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const heroShapes = document.querySelectorAll('.hero-gradient .absolute');
+    heroShapes.forEach((shape, index) => {
+      const speed = 0.5 + (index * 0.1);
+      shape.style.transform = `translateY(${scrolled * speed}px)`;
+    });
+  });
+</script>
+
+<!-- Theme system (handles everything) -->
+<script th:src="@{/js/script.js}"></script>
 </body>
 </html>

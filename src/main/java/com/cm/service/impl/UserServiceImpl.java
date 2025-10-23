@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.cm.helpers.AppConstants;
+import com.cm.helpers.Helper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.cm.entities.User;
 import com.cm.helpers.ResourceNotFoundException;
 import com.cm.repository.UserRepository;
+import com.cm.service.EmailService;
 import com.cm.service.UserService;
 
 @Service
@@ -22,6 +25,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private EmailService emailService;
 
 
     @Override
@@ -36,7 +42,19 @@ public class UserServiceImpl implements UserService{
         //user set roles
         user.setRoles(List.of(AppConstants.ROLE_USER));
 
-        return userRepo.save(user);
+        
+
+        String emailToken= UUID.randomUUID().toString();
+
+        user.setEmailToken(emailToken);
+
+        User saveUser = userRepo.save(user);
+
+        String emailLink = Helper.getLinkForEmailVerification(emailToken);
+
+        emailService.sendEmail(saveUser.getEmail(), "Veify Account : Email Contact Manager", emailLink);
+
+        return saveUser;
     }
 
     @Override
@@ -93,5 +111,7 @@ public class UserServiceImpl implements UserService{
     public User getUserByEmail(String email) {
         return userRepo.findByEmail(email).orElse(null);
     }
+
+    
 
 }

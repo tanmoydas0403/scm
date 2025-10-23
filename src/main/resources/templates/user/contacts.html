@@ -7,6 +7,7 @@
     <title>Your Contacts</title>
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   </head>
   <body>
     <div id="content">
@@ -52,55 +53,65 @@
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             
             <!-- Search Form -->
-            <form th:action="@{/user/contacts}" method="get" class="bg-white dark:bg-gray-800 rounded-t-lg border-b border-gray-200 dark:border-gray-700">
-              <div class="flex p-6 items-center justify-between flex-wrap gap-4">
-                <div class="flex items-center gap-4 flex-1 min-w-[300px]">
-                  <!-- Search Field Selection -->
-                  <div class="w-32 md:w-48">
-                    <label for="searchField" class="sr-only">Search Field</label>
-                    <select name="field" id="searchField" 
-                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                      <option value="name" th:selected="${searchField == 'name'}">Name</option>
-                      <option value="email" th:selected="${searchField == 'email'}">Email</option>
-                      <option value="phone" th:selected="${searchField == 'phone'}">Phone</option>
-                    </select>
-                  </div>
-                  
-                  <!-- Search Input -->
-                  <div class="flex-1 max-w-2xl">
-                    <label for="searchKeyword" class="sr-only">Search</label>
-                    <div class="relative">
-                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <i class="fas fa-search text-gray-500 dark:text-gray-400"></i>
+            <div class="flex justify-center">
+              <form th:action="@{/user/contacts}" method="get" class="bg-white dark:bg-gray-800 rounded-t-lg border-b border-gray-200 dark:border-gray-700">
+                <div class="flex p-6 items-center justify-between flex-wrap gap-4">
+                  <div class="flex items-center gap-4 flex-1 min-w-[300px]">
+                    <!-- Search Field Selection -->
+                    <div class="w-32 md:w-48">
+                      <label for="searchField" class="sr-only">Search Field</label>
+                      <select name="field" id="searchField" 
+                              class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="name" th:selected="${searchField == 'name'}">Name</option>
+                        <option value="email" th:selected="${searchField == 'email'}">Email</option>
+                        <option value="phone" th:selected="${searchField == 'phone'}">Phone</option>
+                      </select>
+                    </div>
+                    
+                    <!-- Search Input -->
+                    <div class="flex-1 max-w-2xl">
+                      <label for="searchKeyword" class="sr-only">Search</label>
+                      <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <i class="fas fa-search text-gray-500 dark:text-gray-400"></i>
+                        </div>
+                        <input type="text" name="keyword" id="searchKeyword"
+                              th:value="${searchKeyword != null ? searchKeyword : ''}"
+                              class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                              placeholder="Enter search term...">
                       </div>
-                      <input type="text" name="keyword" id="searchKeyword"
-                             th:value="${searchKeyword != null ? searchKeyword : ''}"
-                             class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                             placeholder="Enter search term...">
                     </div>
                   </div>
-                </div>
 
-                <!-- Action Buttons -->
-                <div class="flex gap-2">
-                  <button type="submit" 
-                          class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-200 flex items-center gap-2">
-                    <i class="fas fa-search"></i>
-                    Search
-                  </button>
-                  <a th:href="@{/user/contacts}" 
-                     class="px-6 py-2.5 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition duration-200 flex items-center gap-2">
-                    <i class="fas fa-times"></i>
-                    Clear
-                  </a>
-                  <a th:href="@{/user/contacts/add}" 
-                     class="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition duration-200 flex items-center gap-2">
-                    <i class="fas fa-plus"></i>
-                    Add Contact
-                  </a>
+                  <!-- Action Buttons -->
+                  <div class="flex gap-2">
+                    <button type="submit" 
+                            class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-200 flex items-center gap-2">
+                      <i class="fas fa-search"></i>
+                      Search
+                    </button>
+                    <a th:href="@{/user/contacts}" 
+                      class="px-6 py-2.5 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition duration-200 flex items-center gap-2">
+                      <i class="fas fa-times"></i>
+                      Clear
+                    </a>
+                    <a th:href="@{/user/contacts/add}" 
+                      class="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition duration-200 flex items-center gap-2">
+                      <i class="fas fa-plus"></i>
+                      Add Contact
+                    </a>
+                    <!-- Export Button -->
+                    <button 
+                      type="button"
+                      onclick="exportCurrentPageToExcel()"
+                      class="px-6 py-2.5 bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white font-medium rounded-lg transition duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-red-300 dark:focus:ring-red-800 focus:ring-offset-2 dark:focus:ring-offset-gray-900 shadow-sm hover:shadow-md">
+                      <i class="fas fa-file-export"></i>
+                      Export Current Page
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
 
             <!-- Results Summary -->
             <div th:if="${searchKeyword != null && !searchKeyword.empty}" 
@@ -114,13 +125,14 @@
             </div>
 
             <!-- Contacts Table -->
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <table id="contactsTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" class="px-6 py-4">Name</th>
                   <th scope="col" class="px-6 py-4">Phone</th>
                   <th scope="col" class="px-6 py-4">Email</th>
                   <th scope="col" class="px-6 py-4">Links</th>
+                  <th scope="col" class="px-6 py-4">Favorite</th>
                   <th scope="col" class="px-6 py-4">Actions</th>
                 </tr>
               </thead>
@@ -135,10 +147,6 @@
                            alt="Profile picture">
                       <div>
                         <div class="font-semibold text-gray-900 dark:text-white" th:text="${contact.name}"></div>
-                        <div th:if="${contact.favorite}" class="flex items-center gap-1 mt-1">
-                          <i class="fas fa-star text-yellow-500 text-xs"></i>
-                          <span class="text-xs text-gray-500 dark:text-gray-400">Favorite</span>
-                        </div>
                       </div>
                     </div>
                   </td>
@@ -178,6 +186,17 @@
                     </div>
                   </td>
                   
+                  <!-- Favorite Column -->
+                  <td class="px-6 py-4">
+                    <div th:if="${contact.favorite}" class="flex items-center gap-1">
+                      <i class="fas fa-star text-yellow-500 text-sm"></i>
+                      <span class="text-sm text-gray-500 dark:text-gray-400">Yes</span>
+                    </div>
+                    <div th:unless="${contact.favorite}" class="text-gray-400 text-sm">
+                      No
+                    </div>
+                  </td>
+                  
                   <!-- Actions Column -->
                   <td class="px-6 py-4">
                     <div class="flex items-center gap-2">
@@ -203,7 +222,7 @@
                 
                 <!-- Empty State -->
                 <tr th:if="${pageContact.content.empty}">
-                  <td colspan="5" class="px-6 py-12 text-center">
+                  <td colspan="6" class="px-6 py-12 text-center">
                     <div class="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
                       <i class="fas fa-search text-4xl mb-4 text-gray-300 dark:text-gray-600"></i>
                       <p class="text-lg font-medium mb-2">
@@ -284,6 +303,142 @@
     
     <!-- Include JavaScript Files -->
     <script type="text/javascript" th:src="@{/js/script.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script type="text/javascript" th:src="@{/js/contact-modal.js}"></script>
+    <script>
+      function exportCurrentPageToExcel() {
+        try {
+          // Show loading state
+          const exportBtn = document.querySelector('button[onclick="exportCurrentPageToExcel()"]');
+          const originalText = exportBtn.innerHTML;
+          exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Exporting...';
+          exportBtn.disabled = true;
+
+          // Get all contact rows from the CURRENT PAGE ONLY
+          const contactRows = document.querySelectorAll('#contactsTable tbody tr');
+          
+          // Prepare data for Excel
+          const excelData = [];
+          
+          // Add headers
+          excelData.push(['Name', 'Phone', 'Email', 'Website', 'LinkedIn', 'Favorite']);
+          
+          let contactCount = 0;
+          
+          // Process each contact from the current page
+          contactRows.forEach(row => {
+            // Skip ONLY the empty state row (when no contacts found)
+            const isEmptyState = row.querySelector('.text-gray-500') && 
+                                row.querySelector('.text-lg') && 
+                                (row.textContent.includes('No contacts found') || row.textContent.includes('No contacts yet'));
+            
+            if (isEmptyState) {
+              console.log('Skipping empty state row');
+              return;
+            }
+            
+            // Extract contact data from the visible table
+            const nameElement = row.querySelector('.font-semibold');
+            const phoneElement = row.querySelector('.font-mono');
+            const emailElement = row.querySelector('.text-blue-600, .text-blue-400, .dark\\:text-blue-400');
+            
+            const name = nameElement ? nameElement.textContent.trim() : '';
+            const phone = phoneElement ? phoneElement.textContent.trim() : '';
+            const email = emailElement ? emailElement.textContent.trim() : '';
+            
+            // Skip if no basic contact data (this should not happen for real contacts)
+            if (!name && !phone && !email) {
+              console.log('Skipping row with no contact data:', row);
+              return;
+            }
+            
+            // Extract links
+            const linksCell = row.cells[3];
+            let website = '';
+            let linkedin = '';
+            
+            if (linksCell) {
+              const websiteLink = linksCell.querySelector('.fa-link');
+              const linkedinLink = linksCell.querySelector('.fa-linkedin');
+              
+              if (websiteLink && websiteLink.parentElement && websiteLink.parentElement.href) {
+                website = websiteLink.parentElement.href;
+              }
+              if (linkedinLink && linkedinLink.parentElement && linkedinLink.parentElement.href) {
+                linkedin = linkedinLink.parentElement.href;
+              }
+            }
+            
+            // Extract favorite status - SIMPLIFIED AND RELIABLE APPROACH
+            const favoriteCell = row.cells[4];
+            let isFavorite = 'No'; // Default to "No"
+            
+            if (favoriteCell) {
+              // Get all text content from the favorite cell
+              const favoriteText = favoriteCell.textContent.trim().toLowerCase();
+              
+              // Check for "yes" in the text content
+              if (favoriteText.includes('yes')) {
+                isFavorite = 'Yes';
+              }
+              // Check for star icon as backup
+              else if (favoriteCell.querySelector('.fa-star')) {
+                isFavorite = 'Yes';
+              }
+            }
+            
+            console.log(`Exporting contact: ${name || 'Unnamed'}, Phone: ${phone || 'N/A'}, Favorite: ${isFavorite}`);
+            
+            // Add to data array - ALL CONTACTS ARE ADDED HERE
+            excelData.push([name, phone, email, website, linkedin, isFavorite]);
+            contactCount++;
+          });
+          
+          // Check if there are contacts to export (excluding header)
+          if (excelData.length <= 1) {
+            alert('No contacts found on this page to export!');
+            return;
+          }
+          
+          // Create workbook and worksheet
+          const wb = XLSX.utils.book_new();
+          const ws = XLSX.utils.aoa_to_sheet(excelData);
+          
+          // Set column widths
+          const colWidths = [
+            { wch: 25 }, // Name
+            { wch: 15 }, // Phone
+            { wch: 30 }, // Email
+            { wch: 30 }, // Website
+            { wch: 30 }, // LinkedIn
+            { wch: 10 }  // Favorite
+          ];
+          ws['!cols'] = colWidths;
+          
+          // Add worksheet to workbook
+          XLSX.utils.book_append_sheet(wb, ws, 'Contacts');
+          
+          // Generate filename with current page info
+          const currentPage = new URLSearchParams(window.location.search).get('page') || '1';
+          const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+          const filename = `contacts_page_${currentPage}_${timestamp}.xlsx`;
+          
+          // Export to Excel
+          XLSX.writeFile(wb, filename);
+          
+          console.log(`✅ SUCCESS: Exported ${contactCount} contacts from page ${currentPage}`);
+          console.log('📊 All exported data:', excelData);
+          
+        } catch (error) {
+          console.error('❌ ERROR exporting current page to Excel:', error);
+          alert('Error exporting current page contacts to Excel. Please try again.');
+        } finally {
+          // Restore button state
+          const exportBtn = document.querySelector('button[onclick="exportCurrentPageToExcel()"]');
+          exportBtn.innerHTML = '<i class="fas fa-file-export"></i> Export Current Page';
+          exportBtn.disabled = false;
+        }
+      }
+    </script>
   </body>
 </html>

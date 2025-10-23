@@ -1,36 +1,318 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
->
-  <head>
-    <title data-th-text="${loggedInUser.name}+' |  Dashboard'">
-      Profile Page
-    </title>
-  </head>
-  <body>
-    <div id="content">
-      <!-- sidebar -->
-
-      <!-- user is logged in : sidebar -->
-
-      <div th:if="${loggedInUser}">
-        <div data-th-replace="~{user/sidebar :: sidebar}"></div>
-      </div>
-
-      <div class="sm:pl-64 pt-20" style="height: 1000px">
-        <div class="flex justify-center flex-col items-center">
-          <h1 class="text-5xl">Welcome to Dashbaord page</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consequatur, ratione!
-          </p>
-        </div>
-      </div>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title data-th-text="${loggedInUser.name}+' | Dashboard'">Dashboard</title>
+  
+  <!-- Production Tailwind CSS -->
+  <link rel="stylesheet" th:href="@{/css/output.css}" />
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .fade-in {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .stat-card {
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-gray-900 transition-colors duration-300">
+  <div id="content">
+    <!-- Sidebar -->
+    <div th:if="${loggedInUser}">
+      <div data-th-replace="~{user/sidebar :: sidebar}"></div>
     </div>
 
-    <script>
-      console.log("this is profile page");
-    </script>
-  </body>
+    <!-- Main Content -->
+    <div class="sm:pl-64 pt-20 min-h-screen">
+      <div class="px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Welcome Header -->
+        <div class="mb-8 fade-in">
+          <h1 class="text-4xl font-black text-gray-900 dark:text-white mb-2">
+            Welcome back, <span class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent" data-th-text="${loggedInUser.name}">User</span>! 👋
+          </h1>
+          <p class="text-lg text-gray-600 dark:text-gray-400">
+            Here's what's happening with your contacts today
+          </p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          
+          <!-- Total Contacts Card - Blue -->
+          <div class="stat-card bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-600 dark:to-blue-800 rounded-2xl p-6 shadow-xl fade-in border-2 border-blue-300 dark:border-blue-500" style="animation-delay: 0.1s;">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 bg-blue-600 dark:bg-white/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-users text-2xl text-white"></i>
+              </div>
+              <span class="text-gray-800 dark:text-white text-sm font-semibold">Total</span>
+            </div>
+            <div class="text-3xl font-black text-gray-900 dark:text-white mb-1" data-th-text="${contactsCount}">0</div>
+            <p class="text-gray-700 dark:text-shadow-white text-sm font-medium">Total Contacts</p>
+          </div>
+
+          <!-- Favorite Contacts Card - Orange -->
+          <div class="stat-card bg-gradient-to-br from-orange-100 to-orange-200 dark:from-yellow-600 dark:to-orange-700 rounded-2xl p-6 shadow-xl fade-in border-2 border-orange-300 dark:border-orange-500" style="animation-delay: 0.2s;">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 bg-orange-600 dark:bg-white/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-star text-2xl text-white"></i>
+              </div>
+              <span class="text-gray-800 dark:text-white text-sm font-semibold">Favorites</span>
+            </div>
+            <div class="text-3xl font-black text-gray-900 dark:text-white mb-1" data-th-text="${favoriteContactsCount}">0</div>
+            <p class="text-gray-700 dark:text-white/80 text-sm font-medium">Favorite Contacts</p>
+          </div>
+
+          <!-- Recent Contacts Count - Green -->
+          <div class="stat-card bg-gradient-to-br from-green-100 to-green-200 dark:from-green-600 dark:to-emerald-700 rounded-2xl p-6 shadow-xl fade-in border-2 border-green-300 dark:border-green-500" style="animation-delay: 0.3s;">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 bg-green-600 dark:bg-white/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-clock text-2xl text-white"></i>
+              </div>
+              <span class="text-gray-800 dark:text-white text-sm font-semibold">Recent</span>
+            </div>
+            <div class="text-3xl font-black text-gray-900 dark:text-white mb-1" data-th-text="${#lists.size(recentContacts)}">0</div>
+            <p class="text-gray-700 dark:text-white/80 text-sm font-medium">Latest Contacts</p>
+          </div>
+
+          <!-- Profile Status Card - Purple -->
+          <div class="stat-card bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-600 dark:to-pink-700 rounded-2xl p-6 shadow-xl fade-in border-2 border-purple-300 dark:border-purple-500" style="animation-delay: 0.4s;">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 bg-purple-600 dark:bg-white/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-user-check text-2xl text-white"></i>
+              </div>
+              <span class="text-gray-800 dark:text-white text-sm font-semibold">Status</span>
+            </div>
+            <div class="text-3xl font-black text-gray-900 dark:text-white mb-1" data-th-text="${loggedInUser.emailVerified ? 'Verified' : 'Pending'}">Status</div>
+            <p class="text-gray-700 dark:text-white/80 text-sm font-medium">Account Status</p>
+          </div>
+
+        </div>
+
+
+        <!-- Quick Actions & Recent Contacts Grid -->
+        <div class="grid lg:grid-cols-3 gap-6 mb-8">
+          
+          <!-- Quick Actions -->
+          <div class="lg:col-span-1 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 fade-in" style="animation-delay: 0.5s;">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+              <i class="fas fa-bolt text-blue-600 dark:text-blue-400"></i>
+              Quick Actions
+            </h2>
+            
+            <div class="space-y-3">
+              <a href="/user/contacts/add" class="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all duration-300 group">
+                <div class="w-10 h-10 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <i class="fas fa-user-plus text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-gray-900 dark:text-black">Add Contact</div>
+                  <div class="text-sm text-gray-600 dark:text-gray-400">Create new contact</div>
+                </div>
+              </a>
+
+              <a href="/user/contacts" class="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/30 transition-all duration-300 group">
+                <div class="w-10 h-10 bg-green-600 dark:bg-green-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <i class="fas fa-list text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-gray-900 dark:text-black">View All</div>
+                  <div class="text-sm text-gray-600 dark:text-gray-400">Browse contacts</div>
+                </div>
+              </a>
+
+              <a href="/user/profile" class="flex items-center gap-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-all duration-300 group">
+                <div class="w-10 h-10 bg-purple-600 dark:bg-purple-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <i class="fas fa-user-cog text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-gray-900 dark:text-black">My Profile</div>
+                  <div class="text-sm text-gray-600 dark:text-gray-400">Edit profile</div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Recent Contacts -->
+          <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 fade-in" style="animation-delay: 0.6s;">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                <i class="fas fa-history text-green-600 dark:text-green-400"></i>
+                Recent Contacts
+              </h2>
+              <a href="/user/contacts" class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-semibold">
+                View All →
+              </a>
+            </div>
+            
+            <div class="space-y-3">
+              <div th:each="contact, iterStat : ${recentContacts}" th:if="${iterStat.index < 5}" class="flex items-center gap-4 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl transition-all duration-300">
+                <img th:src="${contact.picture != null ? contact.picture : 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg'}" 
+                     class="w-12 h-12 rounded-full object-cover border-2 border-gray-200 dark:border-gray-600"
+                     alt="Profile">
+                <div class="flex-1">
+                  <div class="font-bold text-gray-900 dark:text-white" data-th-text="${contact.name}">Contact Name</div>
+                  <div class="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                    <i class="fas fa-envelope text-xs"></i>
+                    <span data-th-text="${contact.email}">email@example.com</span>
+                  </div>
+                </div>
+                <a th:href="@{'/user/contacts/view/' + ${contact.id}}" class="text-blue-600 dark:text-blue-400 hover:scale-110 transition-transform">
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+              
+              <!-- Empty State -->
+              <div th:if="${#lists.isEmpty(recentContacts)}" class="text-center py-8">
+                <i class="fas fa-user-plus text-4xl text-gray-300 dark:text-gray-600 mb-3"></i>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">No contacts yet</p>
+                <a href="/user/contacts/add" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all duration-300">
+                  <i class="fas fa-plus"></i>
+                  Add Your First Contact
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Activity Chart & Profile Card -->
+        <div class="grid lg:grid-cols-3 gap-6">
+          
+          <!-- Activity Overview -->
+          <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 fade-in" style="animation-delay: 0.7s;">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+              <i class="fas fa-chart-line text-purple-600 dark:text-purple-400"></i>
+              Activity Overview
+            </h2>
+            
+            <div class="space-y-4">
+              <div class="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-calendar-day text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold text-gray-900 dark:text-black">Today</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Contacts added</div>
+                  </div>
+                </div>
+                <div class="text-2xl font-black text-blue-600 dark:text-blue-400">3</div>
+              </div>
+
+              <div class="flex items-center justify-between p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-green-600 dark:bg-green-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-calendar-week text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold text-gray-900 dark:text-black">This Week</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Contacts added</div>
+                  </div>
+                </div>
+                <div class="text-2xl font-black text-green-600 dark:text-green-400">12</div>
+              </div>
+
+              <div class="flex items-center justify-between p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-purple-600 dark:bg-purple-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-calendar-alt text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold text-gray-900 dark:text-black">This Month</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Contacts added</div>
+                  </div>
+                </div>
+                <div class="text-2xl font-black text-purple-600 dark:text-purple-400">45</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Card -->
+          <div class="bg-gradient-to-br from-blue-100 to-purple-200 dark:from-blue-600 dark:to-purple-700 rounded-2xl p-8 shadow-2xl hover:shadow-3xl border-2 border-blue-300 dark:border-purple-500 fade-in transition-all duration-300 hover:-translate-y-2" style="animation-delay: 0.7s; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);">
+            <div class="text-center">
+              <!-- Profile Image with 3D effect -->
+              <div class="inline-block mb-4 transform hover:scale-110 transition-transform duration-300" style="filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.25));">
+                <img data-th-src="@{${loggedInUser.profilePic}}" 
+                    class="w-28 h-28 rounded-full border-4 border-blue-600 dark:border-white/30 object-cover animate-float"
+                    alt="Profile"
+                    style="box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.2);">
+              </div>
+              
+              <!-- Name with text shadow -->
+              <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white" data-th-text="${loggedInUser.name}" style="text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15), 1px 1px 3px rgba(0, 0, 0, 0.1);">User Name</h3>
+              
+              <p class="text-gray-700 dark:text-white/80 mb-6" data-th-text="${loggedInUser.email}" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);">email@example.com</p>
+              
+              <!-- Status box with 3D depth -->
+              <div class="space-y-3 mb-6 text-left bg-white/70 dark:bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-gray-300 dark:border-white/20 hover:scale-105 transition-all duration-300" style="box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.4), inset 0 -2px 0 rgba(0, 0, 0, 0.05);">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2 text-sm text-gray-700 dark:text-white">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email Status</span>
+                  </div>
+                  <span class="font-bold text-gray-900 dark:text-white" data-th-text="${loggedInUser.emailVerified ? '✓ Verified' : '✗ Not Verified'}">Status</span>
+                </div>
+                <!-- Divider -->
+                <div class="h-px bg-gradient-to-r from-transparent via-gray-400 dark:via-white/30 to-transparent" style="box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);"></div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2 text-sm text-gray-700 dark:text-white">
+                    <i class="fas fa-phone"></i>
+                    <span>Phone Status</span>
+                  </div>
+                  <span class="font-bold text-gray-900 dark:text-white" data-th-text="${loggedInUser.phoneVerified ? '✓ Verified' : '✗ Not Verified'}">Status</span>
+                </div>
+              </div>
+              
+              <!-- Button with 3D effect -->
+              <a href="/user/profile" class="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-blue-600 rounded-xl font-bold hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-2xl" style="box-shadow: 0 12px 28px rgba(37, 99, 235, 0.5), 0 4px 10px rgba(37, 99, 235, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.3), inset 0 -2px 0 rgba(0, 0, 0, 0.1);">
+                <i class="fas fa-user-edit"></i>
+                Edit Profile
+              </a>
+            </div>
+          </div>
+
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    console.log("Dashboard page loaded");
+  </script>
+  
+  <!-- Theme system script -->
+  <script th:src="@{/js/script.js}"></script>
+</body>
 </html>

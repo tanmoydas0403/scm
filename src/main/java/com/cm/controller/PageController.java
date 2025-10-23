@@ -1,5 +1,6 @@
 package com.cm.controller;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,10 +13,13 @@ import com.cm.entities.User;
 import com.cm.forms.UserForm;
 import com.cm.helpers.Message;
 import com.cm.helpers.MessageType;
+import com.cm.repository.UserRepository;
 import com.cm.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import java.util.Optional;
+
 
 
 
@@ -24,8 +28,11 @@ public class PageController {
 
     private final UserService userService;
 
-    public PageController(UserService userService) {
+    private final UserRepository userRepo;
+
+    public PageController(UserService userService, UserRepository userRepo) {
         this.userService = userService;
+        this.userRepo = userRepo;
     }
 
     @GetMapping("/")
@@ -83,20 +90,34 @@ public class PageController {
     //Processing the register form
 
     @PostMapping(value = "/do-register")
-    public String processRegister(@Valid @ModelAttribute("userForm") UserForm userForm, BindingResult rBindingResult, HttpSession session) {
-        System.out.println("Processing Register Form"   );
+public String processRegister(
+    @Valid @ModelAttribute("userForm") UserForm userForm, 
+    BindingResult rBindingResult, 
+    HttpSession session) {
+    
+    System.out.println("Processing Register Form");
+    System.out.println(userForm);
+    
+    // Validate form data
+    if (rBindingResult.hasErrors()) {
+        return "register";
+    }
+    
+    try {
+        // Check if email already exists
+        Optional<User> existingUser = userRepo.findByEmail(userForm.getEmail());
         
-        //fetch form data
-        //UserForm
-        System.out.println(userForm);
-
-        //validate form data
-        if (rBindingResult.hasErrors()) {
+        if (existingUser.isPresent()) {
+            // Email already exists - show error
+            Message message = Message.builder()
+                .content("This email is already registered. Please use a different email or login.")
+                .type(MessageType.red)
+                .build();
+            session.setAttribute("message", message);
             return "register";
         }
-
-        //save the data in database
-
+        
+        // Create new user
         User user = new User();
         user.setName(userForm.getName());
         user.setEmail(userForm.getEmail());
@@ -105,23 +126,45 @@ public class PageController {
         user.setEnabled(false);
         user.setPhoneNumber(userForm.getPhoneNumber());
         user.setProfilePic("https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=");
-
-
-        User saveUser = userService.saveUser(user);
-        System.out.println("Saved User: " + saveUser);
-
-        //message = "Successfully Registered";
-
-        //add the message:
-
+        
+        // Save user
+        User savedUser = userService.saveUser(user);
+        System.out.println("Saved User: " + savedUser);
+        
+        // Success message
         Message message = Message.builder()
-        .content("Registration Successful")
-        .type(MessageType.blue).build();
-
+            .content("Registration Successful! You can now login.")
+            .type(MessageType.green)
+            .build();
         session.setAttribute("message", message);
-
-        //redirect to login page
-
+        
         return "redirect:/register";
+        
+    } catch (DataIntegrityViolationException e) {
+        // Handle database constraint violations
+        System.err.println("Database constraint violation: " + e.getMessage());
+        
+        Message message = Message.builder()
+            .content("This email is already registered. Please use a different email.")
+            .type(MessageType.red)
+            .build();
+        session.setAttribute("message", message);
+        
+        return "register";
+        
+    } catch (Exception e) {
+        // Handle any other errors
+        System.err.println("Error during registration: " + e.getMessage());
+        e.printStackTrace();
+        
+        Message message = Message.builder()
+            .content("Registration failed. Please try again later.")
+            .type(MessageType.red)
+            .build();
+        session.setAttribute("message", message);
+        
+        return "register";
     }
+}
+
 }

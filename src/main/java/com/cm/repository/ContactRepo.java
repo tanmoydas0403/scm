@@ -32,4 +32,6 @@ public interface ContactRepo extends JpaRepository<Contact, String> {
     @Modifying
     @Query("DELETE FROM Contact c WHERE c.id = :contactId")
     void hardDeleteById(@Param("contactId") String contactId);
+
+    List<Contact> findByUser(User user);
 }

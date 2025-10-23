@@ -1,21 +1,422 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
->
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
   <head>
-    <title>Contact Us Page</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Contact Us - Smart Contact Manager</title>
+    
+    <!-- Production Tailwind CSS (Replace CDN) -->
+    <link rel="stylesheet" th:href="@{/css/output.css}" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+      * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+      html { scroll-behavior: smooth; }
+      @keyframes float { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-20px);} }
+      @keyframes fadeInUp {from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+      .animate-float {animation: float 6s ease-in-out infinite;}
+      .fade-in-up {animation: fadeInUp 0.6s ease-out forwards;}
+      .scroll-reveal {opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out;}
+      .scroll-reveal.active {opacity: 1;transform: translateY(0);}
+      ::-webkit-scrollbar {width: 10px;}
+      ::-webkit-scrollbar-track {background: #f1f5f9;}
+      .dark ::-webkit-scrollbar-track {background: #1e293b;}
+      ::-webkit-scrollbar-thumb {background: #cbd5e1; border-radius: 5px;}
+      .dark ::-webkit-scrollbar-thumb {background: #475569;}
+    </style>
+    <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+  </style>
   </head>
-  <body>
+  <body class="bg-white dark:bg-gray-900 transition-colors duration-300">
     <div id="content">
-      <h1>Welcome to Contact page</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur,
-        ratione!
+      <!-- Hero Section - WHITE BACKGROUND -->
+      <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80" 
+            alt="Contact Background" 
+            class="w-full h-full object-cover opacity-20 dark:opacity-10"
+          />
+          <!-- Gradient Overlay -->
+          <div class="absolute inset-0 bg-gradient-to-b from-white/95 via-indigo-50/80 to-white/95 dark:from-gray-900/95 dark:via-indigo-950/80 dark:to-gray-900/95"></div>
+        </div>
+        
+        <!-- Animated Decorative Elements -->
+        <div class="absolute inset-0 z-0">
+          <div class="absolute top-20 left-10 w-72 h-72 bg-indigo-400/20 dark:bg-indigo-600/10 rounded-full blur-3xl animate-float"></div>
+          <div class="absolute bottom-32 right-20 w-96 h-96 bg-purple-400/20 dark:bg-purple-600/10 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10 py-20">
+          <div class="max-w-4xl mx-auto text-center">
+            
+            <!-- Main Title -->
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight fade-in-up" style="animation-delay: 0.1s;">
+              <span class="text-slate-900 dark:text-white" style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);">
+                Contact
+              </span>
+              <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 ml-4" style="filter: drop-shadow(2px 2px 4px rgba(99, 102, 241, 0.3));">
+                Us
+              </span>
+            </h1>
+            
+            <!-- Subtitle -->
+            <p class="text-xl md:text-2xl mb-10 text-slate-700 dark:text-gray-200 leading-relaxed fade-in-up max-w-2xl mx-auto font-semibold" style="animation-delay: 0.2s; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);">
+              Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-4 fade-in-up" style="animation-delay: 0.3s;">
+              <a href="#contact-form" class="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl font-bold text-lg shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300">
+                <i class="fas fa-envelope group-hover:rotate-12 transition-transform"></i>
+                Send Message
+              </a>
+              <a href="tel:+919330432085" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 shadow-xl border-2 border-gray-200 dark:border-gray-600 backdrop-blur-md hover:scale-105">
+                <i class="fas fa-phone-alt"></i>
+                Call Us Now
+              </a>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-3 gap-6 mt-16 fade-in-up max-w-2xl mx-auto" style="animation-delay: 0.4s;">
+              <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform duration-300">
+                <div class="text-3xl font-black text-indigo-600 dark:text-indigo-400 mb-1">24/7</div>
+                <div class="text-sm text-gray-700 dark:text-gray-300 font-semibold">Support</div>
+              </div>
+              <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform duration-300">
+                <div class="text-3xl font-black text-purple-600 dark:text-purple-400 mb-1">&lt;24h</div>
+                <div class="text-sm text-gray-700 dark:text-gray-300 font-semibold">Response</div>
+              </div>
+              <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform duration-300">
+                <div class="text-3xl font-black text-pink-600 dark:text-pink-400 mb-1">10K+</div>
+                <div class="text-sm text-gray-700 dark:text-gray-300 font-semibold">Happy Users</div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
+
+
+      <!-- Contact Info Cards -->
+      <section class="py-20 bg-gradient-to-b from-white to-slate-50 dark:from-gray-900 dark:to-gray-800 relative z-20 transition-colors duration-300">
+  <div class="container mx-auto px-6">
+    <!-- Section Header -->
+    <div class="text-center mb-12 scroll-reveal">
+      <h2 class="text-3xl md:text-4xl font-black mb-3 text-slate-900 dark:text-white">
+        Get in Touch
+      </h2>
+      <p class="text-lg text-slate-600 dark:text-gray-300">
+        Multiple ways to reach us
       </p>
     </div>
+    
+    <!-- Contact Cards Grid -->
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      
+      <!-- Phone Card -->
+      <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-2 border-slate-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 scroll-reveal relative overflow-hidden">
+        <!-- Animated Background Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-700/5 dark:from-blue-400/10 dark:to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        <div class="relative z-10">
+          <!-- Icon with Pulse Animation -->
+          <div class="w-16 h-16 bg-blue-500 dark:bg-gradient-to-br dark:from-blue-400 dark:to-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+            <i class="fas fa-phone-alt text-2xl text-white group-hover:animate-pulse"></i>
+          </div>
+
+          
+          <h3 class="text-xl font-black mb-3 text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+            Phone
+          </h3>
+          
+          <p class="text-sm text-slate-500 dark:text-gray-400 mb-4 font-medium">
+            <i class="far fa-clock mr-1"></i>
+            Mon-Fri • 9am - 6pm IST
+          </p>
+          
+          <a href="tel:+919330432085" class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-lg hover:gap-3 transition-all duration-300 group/link">
+            <i class="fas fa-phone-volume text-sm"></i>
+            <span class="group-hover/link:underline">+91-9330432085</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Email Card -->
+      <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-2 border-slate-100 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-600 scroll-reveal relative overflow-hidden">
+        <!-- Animated Background Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-purple-700/5 dark:from-purple-400/10 dark:to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        <div class="relative z-10">
+          <!-- Icon with Bounce Animation -->
+          <div class="w-16 h-16 bg-purple-500 dark:bg-gradient-to-br dark:from-purple-400 dark:to-purple-600 rounded-2xl flex items-center justify-center mb-6 shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+            <i class="fas fa-envelope text-2xl text-white group-hover:animate-bounce"></i>
+          </div>
+          
+          <h3 class="text-xl font-black mb-3 text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">
+            Email
+          </h3>
+          
+          <p class="text-sm text-slate-500 dark:text-gray-400 mb-4 font-medium">
+            <i class="far fa-clock mr-1"></i>
+            Response within 24 hours
+          </p>
+          
+          <a href="mailto:support@scm.com" class="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold text-lg hover:gap-3 transition-all duration-300 group/link">
+            <i class="fas fa-paper-plane text-sm"></i>
+            <span class="group-hover/link:underline">support@scm.com</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Office Card -->
+      <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-2 border-slate-100 dark:border-gray-700 hover:border-pink-300 dark:hover:border-pink-600 scroll-reveal relative overflow-hidden">
+        <!-- Animated Background Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-rose-700/5 dark:from-pink-400/10 dark:to-rose-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        <div class="relative z-10">
+          <!-- Icon with Shake Animation -->
+          <div class="w-16 h-16 bg-pink-500 dark:bg-gradient-to-br dark:from-pink-400 dark:to-rose-500 rounded-2xl flex items-center justify-center mb-6 shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+            <i class="fas fa-map-marker-alt text-2xl text-white group-hover:animate-pulse"></i>
+          </div>
+          
+          <h3 class="text-xl font-black mb-3 text-slate-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
+            Office
+          </h3>
+          
+          <p class="text-sm text-slate-500 dark:text-gray-400 mb-4 font-medium">
+            <i class="fas fa-map-pin mr-1"></i>
+            Visit us anytime
+          </p>
+          
+          <a href="https://www.google.com/maps/place/Shyamnagar,+West+Bengal/@22.8281242,88.3717249,14z" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-pink-600 dark:text-pink-400 font-bold hover:gap-3 transition-all duration-300 group/link">
+            <i class="fas fa-location-arrow text-sm"></i>
+            <span class="group-hover/link:underline text-base">Shyamnagar, West Bengal</span>
+          </a>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- Additional Info Banner -->
+    <div class="mt-12 max-w-4xl mx-auto scroll-reveal">
+      <div class="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 border-2 border-indigo-100 dark:border-gray-600 shadow-lg">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-indigo-600 dark:bg-indigo-500 rounded-full flex items-center justify-center shadow-lg">
+              <i class="fas fa-headset text-white text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white">Need Immediate Help?</h4>
+              <p class="text-sm text-slate-600 dark:text-gray-300">Our support team is here for you</p>
+            </div>
+          </div>
+          <a href="/contact" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+            Start Live Chat
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+      <!-- Contact Form Section -->
+      <section class="py-24 bg-slate-50 dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+          <div class="max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12">
+              <div class="scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-black mb-6 text-slate-900 dark:text-white">Let's talk about your needs</h2>
+                <p class="text-lg text-slate-600 dark:text-gray-300 mb-8 leading-relaxed">
+                  Whether you have a question about features, pricing, need a demo, or anything else, our team is ready to answer all your questions.
+                </p>
+                <div class="space-y-6">
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i class="fas fa-check text-indigo-600 dark:text-indigo-400 text-lg"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold text-slate-900 dark:text-white mb-1">Quick Response</h4>
+                      <p class="text-slate-600 dark:text-gray-300">We respond to all inquiries within 24 hours</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i class="fas fa-users text-purple-600 dark:text-purple-400 text-lg"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold text-slate-900 dark:text-white mb-1">Expert Support</h4>
+                      <p class="text-slate-600 dark:text-gray-300">Get help from our experienced team</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i class="fas fa-shield-alt text-pink-600 dark:text-pink-400 text-lg"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold text-slate-900 dark:text-white mb-1">Secure & Private</h4>
+                      <p class="text-slate-600 dark:text-gray-300">Your information is safe with us</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Social Links -->
+                <div class="mt-10">
+                  <h4 class="font-bold text-slate-900 dark:text-white mb-4">Connect with Me</h4>
+                  <div class="flex gap-4">
+                    <a href="https://www.linkedin.com/in/tanmoy-das-404a84204/" target="_blank" rel="noopener" class="w-10 h-10 bg-blue-700 dark:bg-white rounded-lg flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <i class="fab fa-linkedin text-white dark:text-gray-700"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100010808344207" target="_blank" rel="noopener" class="w-10 h-10 bg-blue-600 dark:bg-white rounded-lg flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <i class="fab fa-facebook text-white dark:text-blue-600"></i>
+                    </a>
+                    <a href="https://github.com/tanmoydas0403" target="_blank" rel="noopener" class="w-10 h-10 bg-gray-900 dark:bg-white rounded-lg flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <i class="fab fa-github text-white dark:text-gray-900"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- Right Side - Form -->
+              <div class="bg-white dark:bg-gray-700 rounded-3xl p-8 shadow-2xl border border-slate-200 dark:border-gray-600 scroll-reveal">
+                <form id="contactForm" class="space-y-6">
+                  <div>
+                    <label for="name" class="block text-sm font-bold text-slate-900 dark:text-white mb-2">Full Name *</label>
+                    <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none transition-colors" placeholder="John Doe"/>
+                  </div>
+                  <div>
+                    <label for="email" class="block text-sm font-bold text-slate-900 dark:text-white mb-2">Email Address *</label>
+                    <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none transition-colors" placeholder="john@example.com"/>
+                  </div>
+                  <div>
+                    <label for="phone" class="block text-sm font-bold text-slate-900 dark:text-white mb-2">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none transition-colors" placeholder="+91-9330432085"/>
+                  </div>
+                  <div>
+                    <label for="subject" class="block text-sm font-bold text-slate-900 dark:text-white mb-2">Subject *</label>
+                    <input type="text" id="subject" name="subject" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none transition-colors" placeholder="How can we help?"/>
+                  </div>
+                  <div>
+                    <label for="message" class="block text-sm font-bold text-slate-900 dark:text-white mb-2">Message *</label>
+                    <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none transition-colors resize-none" placeholder="Tell us more about your inquiry..."></textarea>
+                  </div>
+                  <button type="submit" class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
+                    <i class="fas fa-paper-plane"></i>
+                    Send Message
+                  </button>
+                </form>
+                <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 dark:bg-green-900 border-2 border-green-500 rounded-xl">
+                  <p class="text-green-800 dark:text-green-200 font-semibold flex items-center gap-2">
+                    <i class="fas fa-check-circle"></i>
+                    Thank you! Your message has been sent successfully.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Map Section -->
+      <section class="py-24 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+          <div class="max-w-5xl mx-auto text-center mb-12 scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-black mb-4 text-slate-900 dark:text-white">Visit Our Office</h2>
+            <p class="text-xl text-slate-600 dark:text-gray-300">We're located in Shyamnagar, West Bengal</p>
+          </div>
+          <div class="max-w-5xl mx-auto scroll-reveal">
+            <div class="rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-300 dark:border-gray-700">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58859.60773837769!2d88.3717249!3d22.8281242!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f890c0621fafd1%3A0xd3e5a3c0109745c1!2sShyamnagar%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1729589789123!5m2!1sen!2sin" 
+                width="100%" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                class="w-full h-96">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- FAQ Section -->
+      <section class="py-24 bg-slate-50 dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16 scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-black mb-4 text-slate-900 dark:text-white">Common Questions</h2>
+            <p class="text-xl text-slate-600 dark:text-gray-300">Quick answers to questions you may have</p>
+          </div>
+          <div class="max-w-3xl mx-auto space-y-4">
+            <details class="group bg-white dark:bg-gray-700 rounded-xl p-6 shadow-xl border border-slate-200 dark:border-gray-600 hover:border-indigo-500 dark:hover:border-indigo-400 transition-all scroll-reveal" open>
+              <summary class="flex items-center justify-between cursor-pointer font-bold text-lg text-slate-900 dark:text-white">
+                <span>What are your business hours?</span>
+                <i class="fas fa-chevron-down group-open:rotate-180 transition-transform text-indigo-600 dark:text-indigo-400 text-xl"></i>
+              </summary>
+              <p class="mt-4 text-slate-600 dark:text-gray-300 leading-relaxed font-medium">
+                We're available Monday through Friday, 9am to 6pm IST. For urgent matters, you can reach our support line at +91-9330432085.
+              </p>
+            </details>
+            <details class="group bg-white dark:bg-gray-700 rounded-xl p-6 shadow-xl border border-slate-200 dark:border-gray-600 hover:border-indigo-500 dark:hover:border-indigo-400 transition-all scroll-reveal">
+              <summary class="flex items-center justify-between cursor-pointer font-bold text-lg text-slate-900 dark:text-white">
+                <span>How quickly will I receive a response?</span>
+                <i class="fas fa-chevron-down group-open:rotate-180 transition-transform text-indigo-600 dark:text-indigo-400 text-xl"></i>
+              </summary>
+              <p class="mt-4 text-slate-600 dark:text-gray-300 leading-relaxed font-medium">
+                We aim to respond to all inquiries within 24 hours during business days. Urgent requests are typically handled within 2-4 hours.
+              </p>
+            </details>
+            <details class="group bg-white dark:bg-gray-700 rounded-xl p-6 shadow-xl border border-slate-200 dark:border-gray-600 hover:border-indigo-500 dark:hover:border-indigo-400 transition-all scroll-reveal">
+              <summary class="flex items-center justify-between cursor-pointer font-bold text-lg text-slate-900 dark:text-white">
+                <span>Can I schedule a demo?</span>
+                <i class="fas fa-chevron-down group-open:rotate-180 transition-transform text-indigo-600 dark:text-indigo-400 text-xl"></i>
+              </summary>
+              <p class="mt-4 text-slate-600 dark:text-gray-300 leading-relaxed font-medium">
+                Absolutely! Fill out the contact form with "Demo Request" in the subject line, and our team will reach out to schedule a personalized demo.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </div>
+
     <script>
-      console.log("Home page");
+      console.log("Contact page");
+      
+      // Scroll reveal
+      const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+      }, observerOptions);
+      document.querySelectorAll('.scroll-reveal').forEach((el) => { observer.observe(el); });
+      
+      // Form submission
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+        console.log('Form submitted:', data);
+        const successMsg = document.getElementById('successMessage');
+        successMsg.classList.remove('hidden');
+        this.reset();
+        setTimeout(() => { successMsg.classList.add('hidden'); }, 5000);
+      });
     </script>
+    
+    <!-- Theme system script -->
+    <script th:src="@{/js/script.js}"></script>
   </body>
 </html>
