@@ -90,81 +90,82 @@ public class PageController {
     //Processing the register form
 
     @PostMapping(value = "/do-register")
-public String processRegister(
-    @Valid @ModelAttribute("userForm") UserForm userForm, 
-    BindingResult rBindingResult, 
-    HttpSession session) {
-    
-    System.out.println("Processing Register Form");
-    System.out.println(userForm);
-    
-    // Validate form data
-    if (rBindingResult.hasErrors()) {
-        return "register";
-    }
-    
-    try {
-        // Check if email already exists
-        Optional<User> existingUser = userRepo.findByEmail(userForm.getEmail());
+    public String processRegister(
+        @Valid @ModelAttribute("userForm") UserForm userForm, 
+        BindingResult rBindingResult, 
+        HttpSession session) {
         
-        if (existingUser.isPresent()) {
-            // Email already exists - show error
-            Message message = Message.builder()
-                .content("This email is already registered. Please use a different email or login.")
-                .type(MessageType.red)
-                .build();
-            session.setAttribute("message", message);
+        System.out.println("Processing Register Form");
+        System.out.println(userForm);
+        
+        // Validate form data
+        if (rBindingResult.hasErrors()) {
             return "register";
         }
         
-        // Create new user
-        User user = new User();
-        user.setName(userForm.getName());
-        user.setEmail(userForm.getEmail());
-        user.setPassword(userForm.getPassword());
-        user.setAbout(userForm.getAbout());
-        user.setEnabled(false);
-        user.setPhoneNumber(userForm.getPhoneNumber());
-        user.setProfilePic("https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=");
-        
-        // Save user
-        User savedUser = userService.saveUser(user);
-        System.out.println("Saved User: " + savedUser);
-        
-        // Success message
-        Message message = Message.builder()
-            .content("Registration Successful! You can now login.")
-            .type(MessageType.green)
-            .build();
-        session.setAttribute("message", message);
-        
-        return "redirect:/register";
-        
-    } catch (DataIntegrityViolationException e) {
-        // Handle database constraint violations
-        System.err.println("Database constraint violation: " + e.getMessage());
-        
-        Message message = Message.builder()
-            .content("This email is already registered. Please use a different email.")
-            .type(MessageType.red)
-            .build();
-        session.setAttribute("message", message);
-        
-        return "register";
-        
-    } catch (Exception e) {
-        // Handle any other errors
-        System.err.println("Error during registration: " + e.getMessage());
-        e.printStackTrace();
-        
-        Message message = Message.builder()
-            .content("Registration failed. Please try again later.")
-            .type(MessageType.red)
-            .build();
-        session.setAttribute("message", message);
-        
-        return "register";
+        try {
+            // Check if email already exists
+            Optional<User> existingUser = userRepo.findByEmail(userForm.getEmail());
+            
+            if (existingUser.isPresent()) {
+                // Email already exists - show error
+                Message message = Message.builder()
+                    .content("This email is already registered. Please use a different email or login.")
+                    .type(MessageType.red)
+                    .build();
+                session.setAttribute("message", message);
+                return "register";
+            }
+            
+            // Create new user
+            User user = new User();
+            user.setName(userForm.getName());
+            user.setEmail(userForm.getEmail());
+            user.setPassword(userForm.getPassword());
+            user.setAbout(userForm.getAbout());
+            user.setEnabled(false);
+            user.setPhoneNumber(userForm.getPhoneNumber());
+            user.setProfilePic("https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=");
+            
+            // Save user
+            User savedUser = userService.saveUser(user);
+            System.out.println("Saved User: " + savedUser);
+            
+            // Success message
+            Message message = Message.builder()
+                .content("Registration Successful! You can now login.")
+                .type(MessageType.green)
+                .build();
+            session.setAttribute("message", message);
+            
+            return "redirect:/register";
+            
+        } catch (DataIntegrityViolationException e) {
+            // Handle database constraint violations
+            System.err.println("Database constraint violation: " + e.getMessage());
+            
+            Message message = Message.builder()
+                .content("This email is already registered. Please use a different email.")
+                .type(MessageType.red)
+                .build();
+            session.setAttribute("message", message);
+            
+            return "register";
+            
+        } catch (Exception e) {
+            // Handle any other errors
+            System.err.println("Error during registration: " + e.getMessage());
+            e.printStackTrace();
+            
+            Message message = Message.builder()
+                .content("Registration failed. Please try again later.")
+                .type(MessageType.red)
+                .build();
+            session.setAttribute("message", message);
+            
+            return "register";
+        }
     }
-}
+
 
 }
