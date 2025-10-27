@@ -29,10 +29,10 @@
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 dark:text-gray-100">
 <!-- Common header/navbar -->
-<div th:if="${loggedInUser}">
-    <div th:replace="~{user/user_navbar::user-navbar}"></div>
+<div data-th-if="${loggedInUser}">
+    <div data-th-replace="~{user/user_navbar::user-navbar}"></div>
 </div>
-<div th:unless="${loggedInUser}">
+<div data-th-unless="${loggedInUser}">
     <div th:replace="~{navbar :: navbar}"></div>
 </div>
 

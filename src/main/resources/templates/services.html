@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: parent(~{::#content},~{::title},~{})}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -89,6 +89,10 @@
   </head>
   <body class="bg-white dark:bg-gray-900 transition-colors duration-300">
     <div id="content">
+        <!-- Navigation Sidebar -->
+        <div th:if="${loggedInUser}">
+            <div th:replace="~{user/sidebar :: sidebar}"></div>
+        </div>
       <!-- Hero Section -->
       <section class="hero-gradient relative min-h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute top-20 left-10 w-72 h-72 bg-white/20 dark:bg-white/10 rounded-full blur-3xl animate-float"></div>
